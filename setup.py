@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='django-editormd',
-    version='0.2.2',
+    version='0.2.3',
     description='django-editormd package helps integrate editor.md with Django.',
     long_description=open('README.md').read(),
     author='xixijun',

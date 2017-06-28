@@ -20,7 +20,9 @@ def upload_image(request):
             instance.save()
             result['success'] = 1
             result['message'] = 'Upload image success'
-            result['url'] = instance.image_file.url
+            result['url'] = '{}://{}'.format(request.scheme,
+                                             request.get_host()) \
+                            + instance.image_file.url
             return JsonResponse(result)
         result['message'] = 'Upload image failed'
         return JsonResponse(result)
