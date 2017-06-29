@@ -44,6 +44,9 @@ class EditorMdWidget(forms.Textarea):
                                 $('#' + this.id).hide()
                                 $('.editormd').show()
                             },
+                            imageUpload: true,
+                            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                            imageUploadURL: "/editormd/upload/",
                         });
                     });
                 })(ee.jQuery);
