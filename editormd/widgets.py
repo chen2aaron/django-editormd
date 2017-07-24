@@ -15,7 +15,13 @@ class EditorMdWidget(forms.Textarea):
     def __init__(self, attrs=None):
         super(EditorMdWidget, self).__init__(attrs)
 
-    def render(self, name, value, attrs=None):
+    def build_attrs(self, base_attrs, extra_attrs=None, **kwargs):
+        attrs = dict(base_attrs, **kwargs)
+        if extra_attrs:
+            attrs.update(extra_attrs)
+        return attrs
+
+    def render(self, name, value, attrs=None, renderer=None):
         if value is None:
             value = ''
         final_attrs = self.build_attrs(attrs, name=name)
