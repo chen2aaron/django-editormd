@@ -21,10 +21,10 @@ class EditorMdWidget(forms.Textarea):
             attrs.update(extra_attrs)
         return attrs
 
-    def render(self, name, value, attrs=None, renderer=None):
+    def render(self, name, value, attrs=None):
         if value is None:
             value = ''
-        final_attrs = self.build_attrs(attrs, name=name)
+        final_attrs = self.build_attrs(self.attrs, attrs, name=name)
         html = """
             <div id="%(id)s_editormd" class="editormd" style="z-index:1001;">
                 <textarea %(attrs)s style="display:none;">%(body)s</textarea>
