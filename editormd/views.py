@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import EditormdImage
+from .models import Image
 from .forms import ImageUploadForm
 
 
@@ -15,7 +15,7 @@ def upload_image(request):
         request.FILES['image_file'] = request.FILES['editormd-image-file']
         form = ImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            instance = EditormdImage(**form.cleaned_data)
+            instance = Image(**form.cleaned_data)
             instance.author = request.user
             instance.save()
             result['success'] = 1
