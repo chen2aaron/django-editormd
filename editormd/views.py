@@ -45,7 +45,7 @@ def add_text_watermark(filename, text):
     # Paste the watermark (with alpha layer) onto the original image and save it
     img.paste(watermark, None, watermark)
     buffer = BytesIO()
-    img.save(buffer, format='JPEG')
+    img.save(buffer, format=img.format)
     buffer_val = buffer.getvalue()
     return ContentFile(buffer_val)
 
@@ -61,13 +61,13 @@ def upload_image(request):
         form = ImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
             image_file = form.cleaned_data['image_file']
-            if WATERMARK:
+            if WATERMARK and image_file.content_type != 'image/gif':
                 pillow_image = add_text_watermark(
                     image_file,
                     WATERMARK_TEXT)
                 image_file = InMemoryUploadedFile(
-                    pillow_image, None, 'foo.img',
-                    'image/jpeg',
+                    pillow_image, None, image_file.name,
+                    image_file.content_type,
                     pillow_image.tell, None)
 
             instance = EditorImage(image_file=image_file)
