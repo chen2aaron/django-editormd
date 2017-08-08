@@ -1,5 +1,10 @@
 from io import BytesIO
 
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
+
 from PIL import Image, ImageDraw, ImageFont
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -50,6 +55,10 @@ def add_text_watermark(filename, text):
     return ContentFile(buffer_val)
 
 
+def is_url(url):
+    return urlparse(url).scheme in ('http', 'https',)
+
+
 @csrf_exempt
 def upload_image(request):
     result = {
@@ -75,9 +84,12 @@ def upload_image(request):
             instance.save()
             result['success'] = 1
             result['message'] = 'Upload image success'
-            result['url'] = '{}://{}'.format(request.scheme,
-                                             request.get_host()) \
-                            + instance.image_file.url
+            if is_url(instance.image_file.url):
+                result['url'] = instance.image_file.url
+            else:
+                result['url'] = '{}://{}'.format(request.scheme,
+                                                 request.get_host()) \
+                                + instance.image_file.url
             return JsonResponse(result)
         result['message'] = 'Upload image failed'
         return JsonResponse(result)
