@@ -2,13 +2,16 @@ from setuptools import setup
 
 setup(
     name='django-editormd',
-    version='0.2.4',
+    version='0.3.0',
     description='django-editormd package helps integrate editor.md with Django.',
     long_description=open('README.md').read(),
     author='xixijun',
     author_email='chen2aaron@gmail.com',
     packages=['editormd'],
     include_package_data=True,
+    install_requires=[
+        'Pillow',
+    ],
     url='http://github.com/chen2aaron/django-editormd',
     license='MIT',
     zip_safe=False,

@@ -45,3 +45,16 @@ class PageForm(forms.ModelForm):
 class PageAdmin(admin.ModelAdmin):
     form = PageForm
 ```
+
+## Settings
+
+You can use the following settings in `settings.py`.
+
+- EDITORMD_UPLOAD_TO
+  set your upload path
+  
+- EDITORMD_WATERMARK
+  default is false, if set True, you should set `EDITORMD_WATERMARK_TEXT='some string'`
+  
+- EDITORMD_UPLOAD_SUFFIX
+  If you use `django-qiniu-storage`, maybe you will use watermark suffix.
