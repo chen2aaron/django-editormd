@@ -11,7 +11,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from editormd.settings import WATERMARK, WATERMARK_TEXT
+from editormd.settings import WATERMARK, WATERMARK_TEXT, UPLOAD_SUFFIX
 from .forms import ImageUploadForm
 from .models import Image as EditorImage
 
@@ -90,6 +90,8 @@ def upload_image(request):
                 result['url'] = '{}://{}'.format(request.scheme,
                                                  request.get_host()) \
                                 + instance.image_file.url
+            if UPLOAD_SUFFIX:
+                result['url'] += UPLOAD_SUFFIX
             return JsonResponse(result)
         result['message'] = 'Upload image failed'
         return JsonResponse(result)
